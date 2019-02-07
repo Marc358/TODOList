@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.todo.entity.TODO;
@@ -87,7 +88,7 @@ public class TODOController {
 	}
 
 	@ApiOperation(value = "Elimina una tarea de la base de datos.")
-	@RequestMapping(value = "/deltodo/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deltodo/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> delTODO(@PathVariable Long id) throws SQLException {
 		try {
 			Class.forName("org.h2.Driver");
@@ -108,7 +109,7 @@ public class TODOController {
 	}
 	
 	@ApiOperation(value = "Modifica una tarea de la la base de datos.")
-	@RequestMapping(value = "/modtodo/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/modtodo/{id}", method = RequestMethod.POST)
 	public ResponseEntity<String> modTODO(@PathVariable Long id, @RequestParam(value = "title") String title, @RequestParam(value = "desc") String desc,
 			@RequestParam(value = "state") String state) throws SQLException {
 		try {
