@@ -22,6 +22,7 @@ import com.example.todo.entity.TODO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -37,7 +38,7 @@ public class TODOController {
            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
 	@RequestMapping(value = "/gettodo/{id}", method = RequestMethod.GET)
-	public TODO getTODO(@PathVariable Long id) throws SQLException {
+	public TODO getTODO(@ApiParam("Id de la tarea que queremos consultar.") @PathVariable Long id) throws SQLException {
 		TODO resultat = null;
 		try {
 			Class.forName("org.h2.Driver");
@@ -62,8 +63,8 @@ public class TODOController {
 
 	@ApiOperation(value = "Crea una nueva tarea y la guarda a la base de datos.")
 	@RequestMapping(value = "/addtodo", method = RequestMethod.POST)
-	public ResponseEntity<String> addTODO(@RequestParam(value = "title") String title, @RequestParam(value = "desc") String desc,
-			@RequestParam(value = "state") String state) throws SQLException {
+	public ResponseEntity<String> addTODO(@ApiParam("Titulo de la tarea.") @RequestParam(value = "title") String title,@ApiParam("Descripción de la tarea a realizar.") @RequestParam(value = "desc") String desc,
+			@ApiParam("Estado en el que se encuentra la tarea.") @RequestParam(value = "state") String state) throws SQLException {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			Date d = new Date();
@@ -89,7 +90,7 @@ public class TODOController {
 
 	@ApiOperation(value = "Elimina una tarea de la base de datos.")
 	@RequestMapping(value = "/deltodo/{id}", method = RequestMethod.GET)
-	public ResponseEntity<String> delTODO(@PathVariable Long id) throws SQLException {
+	public ResponseEntity<String> delTODO(@ApiParam("Id de la tarea a eliminar.") @PathVariable Long id) throws SQLException {
 		try {
 			Class.forName("org.h2.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:h2:~/todoList", "sa", "");
@@ -110,8 +111,8 @@ public class TODOController {
 	
 	@ApiOperation(value = "Modifica una tarea de la la base de datos.")
 	@RequestMapping(value = "/modtodo/{id}", method = RequestMethod.POST)
-	public ResponseEntity<String> modTODO(@PathVariable Long id, @RequestParam(value = "title") String title, @RequestParam(value = "desc") String desc,
-			@RequestParam(value = "state") String state) throws SQLException {
+	public ResponseEntity<String> modTODO(@ApiParam("Id de la tarea a modificar.") @PathVariable Long id,@ApiParam("Nuevo titulo de la tarea.")  @RequestParam(value = "title") String title,@ApiParam("Nueva descripción de la tarea.")  @RequestParam(value = "desc") String desc,
+			@ApiParam("Nuevo estado de la tarea.") @RequestParam(value = "state") String state) throws SQLException {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			Date d = new Date();
